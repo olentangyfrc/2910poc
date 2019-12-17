@@ -1,8 +1,13 @@
 package org.frcteam2910.common.control;
 
+import org.frcteam2910.common.Logger;
 import org.frcteam2910.common.math.MathUtils;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public class PidController {
+    private static Logger logger = new Logger(PidController.class);
+
     private PidConstants constants;
 
     private double setpoint;
@@ -22,6 +27,7 @@ public class PidController {
     }
 
     public double calculate(double current, double dt) {
+
         double error = setpoint - current;
         if (continuous) {
             error %= inputRange;
@@ -50,8 +56,10 @@ public class PidController {
         }
         lastError = error;
 
-        return MathUtils.clamp(constants.p * error + constants.i * integral + constants.d * derivative,
+        double r =  MathUtils.clamp(constants.p * error + constants.i * integral + constants.d * derivative,
                 minOutput, maxOutput);
+
+        return r;
     }
 
     public void reset() {

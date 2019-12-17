@@ -4,25 +4,28 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Spark;
+
+import org.frcteam2910.common.Logger;
 import org.frcteam2910.common.control.PidConstants;
 import org.frcteam2910.common.control.PidController;
 import org.frcteam2910.common.drivers.SwerveModule;
 import org.frcteam2910.common.math.Vector2;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public class Mk2SwerveModule extends SwerveModule {
-    private static final PidConstants ANGLE_CONSTANTS = new PidConstants(0.5, 0.0, 0.0001);
+    private static Logger logger = new Logger(Mk2SwerveModule.class);
+    //private static final PidConstants ANGLE_CONSTANTS = new PidConstants(.25, 0.0, 0.0001);
+    private static final PidConstants ANGLE_CONSTANTS = new PidConstants(.25, 0.0, 0.000);
     private static final double DRIVE_TICKS_PER_INCH = 1.0 / (4.0 * Math.PI / 60.0 * 15.0 / 20.0 * 24.0 / 38.0 * 18.0); // 0.707947
 
-    private static final double CAN_UPDATE_RATE = 200.0;
+    private static final double CAN_UPDATE_RATE = 50.0;
 
     private final double angleOffset;
 
-    private Spark angleMotor;
+    private CANSparkMax angleMotor;
     private AnalogInput angleEncoder;
     private CANSparkMax driveMotor;
     private CANEncoder driveEncoder;
@@ -59,7 +62,7 @@ public class Mk2SwerveModule extends SwerveModule {
     private PidController angleController = new PidController(ANGLE_CONSTANTS);
 
     public Mk2SwerveModule(Vector2 modulePosition, double angleOffset,
-                           Spark angleMotor, CANSparkMax driveMotor, AnalogInput angleEncoder) {
+                           CANSparkMax angleMotor, CANSparkMax driveMotor, AnalogInput angleEncoder) {
         super(modulePosition);
         this.angleOffset = angleOffset;
         this.angleMotor = angleMotor;
@@ -143,6 +146,13 @@ public class Mk2SwerveModule extends SwerveModule {
     public void updateState(double dt) {
         super.updateState(dt);
 
-        angleMotor.set(angleController.calculate(getCurrentAngle(), dt));
+        double c = getCurrentAngle();
+        double sp = angleController.getSetpoint();
+        double r = angleController.calculate(c, dt);
+
+        if (DriverStation.getInstance().isEnabled() && getName().equals("Front Left")) {
+            logger.info("sp[%f] ta[%f] c[%f] e[%f] r[%f]", sp, this.targetAngle, c, (sp - c), r);
+        }
+        angleMotor.set(r);
     }
 }

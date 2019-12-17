@@ -1,9 +1,13 @@
 package org.frcteam2910.common.drivers;
 
+import org.frcteam2910.common.Logger;
 import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
+import edu.wpi.first.wpilibj.DriverStation;
+
 public abstract class SwerveModule {
+    private static Logger logger = new Logger(SwerveModule.class);
     private final Vector2 modulePosition;
 
     private final Object sensorMutex = new Object();
@@ -12,7 +16,7 @@ public abstract class SwerveModule {
 
     private final Object stateMutex = new Object();
     private double targetSpeed = 0.0;
-    private double targetAngle = 0.0;
+    protected double targetAngle = 0.0;
 
     private final Object kinematicsMutex = new Object();
     private Vector2 currentPosition = Vector2.ZERO;
@@ -147,6 +151,8 @@ public abstract class SwerveModule {
         }
     }
 
+    /*
+    /// PMW
     public final void setTargetVelocity(double speed, double angle) {
         if (speed < 0.0) {
             speed *= -1.0;
@@ -164,6 +170,7 @@ public abstract class SwerveModule {
             targetAngle = angle;
         }
     }
+    */
 
     /**
      * Gets the current position.
@@ -246,6 +253,7 @@ public abstract class SwerveModule {
             targetAngle += 2.0 * Math.PI;
         }
 
+        /*
         // Deltas that are greater than 90 deg or less than -90 deg can be inverted so the total movement of the module
         // is less than 90 deg by inverting the wheel direction
         delta = targetAngle - currentAngle;
@@ -255,11 +263,16 @@ public abstract class SwerveModule {
 
             targetSpeed *= -1.0;
         }
+        */
 
         // Put target angle back into the range [0, 2pi)
         targetAngle %= 2.0 * Math.PI;
         if (targetAngle < 0.0) {
             targetAngle += 2.0 * Math.PI;
+        }
+
+        if (DriverStation.getInstance().isEnabled() && getName().equals("Front Left")) {
+            logger.info("c[%f] ot[%f] ct[%f]", currentAngle, this.targetAngle, targetAngle);
         }
 
         setTargetAngle(targetAngle);

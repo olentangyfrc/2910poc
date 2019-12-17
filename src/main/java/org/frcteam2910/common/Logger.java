@@ -48,7 +48,8 @@ public class Logger {
 		if (name == null)
 			out.format("<%s> (%s) [%s]: %s%n", RUN_INSTANCE_UUID, new Date(), severity, msg);
 		else
-			out.format("<%s> (%s) [%s/%s]: %s%n", RUN_INSTANCE_UUID, new Date(), name, severity, msg);
+			out.format("%s:[%s]: %s%n:", severity, name, msg);
+			//out.format("<%s> (%s) [%s/%s]: %s%n", RUN_INSTANCE_UUID, new Date(), name, severity, msg);
 	}
 
 	private void log(Severity severity, String msg) {
