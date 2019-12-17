@@ -108,12 +108,10 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
         backRightModule.setName("Back Right");
 
         swerveModules = new Mk2SwerveModule[]{
-                frontLeftModule
-                /*
+                frontLeftModule,
                 frontRightModule,
                 backLeftModule,
                 backRightModule
-                */
         };
 
         snapRotationController.setInputRange(0.0, 2.0 * Math.PI);
