@@ -33,10 +33,10 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
             new CentripetalAccelerationConstraint(25.0 * 12.0)
     };
 
-    private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(321.1);
-    private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(0.0);
-    private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(0.0);
-    private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(0.0);
+    private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(321.4);
+    private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(325.0);
+    private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(204.5);
+    private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = -Math.toRadians(171.8);
 
     private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
     private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.2, 0.01, 0.0);
