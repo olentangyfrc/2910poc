@@ -18,7 +18,8 @@ public final class Pigeon extends Gyroscope {
 
     @Override
     public Rotation2 getUnadjustedAngle() {
-        return Rotation2.fromRadians(getAxis(Axis.YAW));
+        return new Rotation2(0.0, 0.0, false);
+        // return Rotation2.fromRadians(getAxis(Axis.YAW));
     }
 
     @Override
@@ -26,7 +27,8 @@ public final class Pigeon extends Gyroscope {
         double[] xyz = new double[3];
         pigeon.getRawGyro(xyz);
 
-        return Math.toRadians(xyz[2]);
+        // return Math.toRadians(xyz[2]);
+        return 0.0;
     }
 
     public double getAxis(Axis axis) {

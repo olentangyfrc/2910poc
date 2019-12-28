@@ -151,7 +151,6 @@ public abstract class SwerveModule {
         }
     }
 
-    /*
     /// PMW
     public final void setTargetVelocity(double speed, double angle) {
         if (speed < 0.0) {
@@ -170,7 +169,6 @@ public abstract class SwerveModule {
             targetAngle = angle;
         }
     }
-    */
 
     /**
      * Gets the current position.
@@ -253,7 +251,6 @@ public abstract class SwerveModule {
             targetAngle += 2.0 * Math.PI;
         }
 
-        /*
         // Deltas that are greater than 90 deg or less than -90 deg can be inverted so the total movement of the module
         // is less than 90 deg by inverting the wheel direction
         delta = targetAngle - currentAngle;
@@ -263,7 +260,6 @@ public abstract class SwerveModule {
 
             targetSpeed *= -1.0;
         }
-        */
 
         // Put target angle back into the range [0, 2pi)
         targetAngle %= 2.0 * Math.PI;
