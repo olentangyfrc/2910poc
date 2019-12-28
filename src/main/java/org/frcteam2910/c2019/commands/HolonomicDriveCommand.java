@@ -13,14 +13,13 @@ public class HolonomicDriveCommand extends Command {
 
     @Override
     protected void execute() {
-        boolean ignoreScalars = Robot.getOi().primaryController.getLeftBumperButton().get();
 
-        double forward = Robot.getOi().primaryController.getLeftYAxis().get(true);
-        double strafe = Robot.getOi().primaryController.getLeftXAxis().get(true);
-        double rotation = Robot.getOi().primaryController.getRightXAxis().get(true, ignoreScalars);
+        double forward = Robot.getOi().getForward();
+        double strafe = Robot.getOi().getStrafe();
+        double rotation = Robot.getOi().getRotation();
 
-        boolean robotOriented = Robot.getOi().primaryController.getXButton().get();
-        boolean reverseRobotOriented = Robot.getOi().primaryController.getYButton().get();
+        boolean robotOriented = Robot.getOi().getRobotOriented();
+        boolean reverseRobotOriented = Robot.getOi().getReverseRobotOriented();
 
         Vector2 translation = new Vector2(forward, strafe);
 
